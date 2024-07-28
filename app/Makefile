@@ -31,6 +31,8 @@ LDFLAGS		+= -L$(OPENCM3_DIR)/lib
 
 DEFS		+= -I$(OPENCM3_DIR)/include
 DEFS		+= -I$(INC_DIR)
+DEFS        += -I$(INC_DIR)/BMP280
+DEFS        += -I$(INC_DIR)/E32
 
 ###############################################################################
 # Executables
@@ -55,6 +57,8 @@ CSTD		?= -std=c99
 # Source files
 
 OBJS		+= $(SRC_DIR)/$(BINARY).o
+OBJS        += $(INC_DIR)/BMP280/BMP280.o
+OBJS        += $(INC_DIR)/E32/E32.o
 
 ###############################################################################
 # C flags

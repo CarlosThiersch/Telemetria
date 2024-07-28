@@ -2,7 +2,8 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/cm3/systick.h>
 #include <libopencm3/cm3/vector.h>
-
+#include <BMP280/BMP280.h>
+#include <E32/E32.h>
 #define CPU_FREQ 180000000
 #define SYSTICK_FREQ 1000
 #define LED_PORT GPIOB
@@ -37,14 +38,44 @@ int main(){
     rcc_setup();
     gpio_setup();
     systick_setup();
-    
+   
     uint32_t start_time = get_ticks();
+
+    if(BMP_init()){
+        gpio_set(LED_PORT, LED_PIN);
+    } else {
+        gpio_clear(LED_PORT, LED_PIN);
+    }
+
+    union {
+        float temperature;
+        uint32_t b_temperature;
+    } u_temperature;
+
+    union {
+        float pressure;
+        uint32_t b_pressure;
+    } u_pressure;
     
+
+    //E32_init();
+    //setRadio();
+
     while (1){
-        if (get_ticks() - start_time >= 100){
-            start_time = get_ticks();
-            gpio_toggle(LED_PORT, LED_PIN);
-        }
+
+            u_temperature.temperature = BMP_get_temperature();
+            u_pressure.pressure = BMP_get_pressure();
+            __asm__ volatile ("mov r9, %0" : : "r" (u_temperature.b_temperature));
+            __asm__ volatile ("mov r10, %0" : : "r" (u_pressure.b_pressure));
+            //usart_send_data(UART5,u_temperature.x_temperature,4);
+            
+            if(u_temperature.temperature > 10.0 && u_temperature.temperature < 40.0
+                && u_pressure.pressure > 90000.0 && u_pressure.pressure < 100000.0){
+                 gpio_clear(LED_PORT, LED_PIN);
+             } else {
+                 gpio_set(LED_PORT, LED_PIN);
+            }
+            
     }
 
     return 0;
