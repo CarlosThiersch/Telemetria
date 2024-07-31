@@ -33,6 +33,7 @@ DEFS		+= -I$(OPENCM3_DIR)/include
 DEFS		+= -I$(INC_DIR)
 DEFS        += -I$(INC_DIR)/BMP280
 DEFS        += -I$(INC_DIR)/E32
+DEFS        += -I$(INC_DIR)/UART
 
 ###############################################################################
 # Executables
@@ -57,8 +58,11 @@ CSTD		?= -std=c99
 # Source files
 
 OBJS		+= $(SRC_DIR)/$(BINARY).o
+OBJS		+= $(SRC_DIR)/system.o
 OBJS        += $(INC_DIR)/BMP280/BMP280.o
 OBJS        += $(INC_DIR)/E32/E32.o
+OBJS        += $(INC_DIR)/UART/uart.o
+OBJS        += $(INC_DIR)/UART/ring_buffer.o
 
 ###############################################################################
 # C flags

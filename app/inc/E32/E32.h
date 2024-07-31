@@ -28,10 +28,13 @@
 
         c00000001a35c40
 */
-#include "stdint.h"
-#include <libopencm3/stm32/rcc.h>
+#include <common_defines.h>
 #include <libopencm3/stm32/gpio.h>
-#include <libopencm3/stm32/usart.h>
+#include <UART/uart.h>
+
+#define MODE_PORT GPIOB
+#define M0_PIN GPIO4
+#define M1_PIN GPIO3
 
 typedef enum {
     C0 = 0xC0,  // Saves data on power-down
@@ -136,12 +139,9 @@ typedef struct {
 } Config;
 
 void E32_init();
-void setRadio();
 
-void configure(Config config);
-uint8_t freq2Hex(int freq);
-// Data *rxData; //For interrupt future implementation
-void resetModule();
-void sendOperatingParams(uint8_t cfgByte);
-void usart_send_data(uint32_t usart, const uint8_t *data, uint32_t length);
-void usart_recv_data(uint32_t usart, uint8_t *data, uint32_t length);
+bool E32_configure();
+
+bool compare_configuration(uint8_t *c1, Config c2);
+
+void E32_set_mode(uint8_t mode);
