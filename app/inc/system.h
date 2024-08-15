@@ -4,6 +4,7 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/cm3/systick.h>
 #include <libopencm3/cm3/vector.h>
+#include <libopencm3/stm32/exti.h>
 
 #define CPU_FREQ 180000000
 #define SYSTICK_FREQ 1000

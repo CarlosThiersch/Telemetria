@@ -6,7 +6,7 @@ BMP_calibration calibration = {
 int32_t fine_temp;
 
 void BMP_i2c_setup(){
-    rcc_periph_clock_enable(GPIOB);
+    rcc_periph_clock_enable(RCC_GPIOB);
 
     //Configuração dos pinos PB6 e PB7 para o i2c
     gpio_mode_setup(GPIOB, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO6 | GPIO7);

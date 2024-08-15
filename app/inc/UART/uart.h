@@ -6,6 +6,8 @@
 
 void E32_uart_setup();
 
+void E32_uart_change_baud(uint32_t baud);
+
 void E32_uart_write(uint8_t *data, uint32_t length);
 
 void E32_uart_write_byte(uint8_t data);

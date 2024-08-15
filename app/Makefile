@@ -32,6 +32,7 @@ LDFLAGS		+= -L$(OPENCM3_DIR)/lib
 DEFS		+= -I$(OPENCM3_DIR)/include
 DEFS		+= -I$(INC_DIR)
 DEFS        += -I$(INC_DIR)/BMP280
+DEFS        += -I$(INC_DIR)/MPU6050
 DEFS        += -I$(INC_DIR)/E32
 DEFS        += -I$(INC_DIR)/UART
 
@@ -60,6 +61,7 @@ CSTD		?= -std=c99
 OBJS		+= $(SRC_DIR)/$(BINARY).o
 OBJS		+= $(SRC_DIR)/system.o
 OBJS        += $(INC_DIR)/BMP280/BMP280.o
+OBJS        += $(INC_DIR)/MPU6050/MPU6050.o
 OBJS        += $(INC_DIR)/E32/E32.o
 OBJS        += $(INC_DIR)/UART/uart.o
 OBJS        += $(INC_DIR)/UART/ring_buffer.o

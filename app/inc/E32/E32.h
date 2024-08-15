@@ -145,3 +145,5 @@ bool E32_configure();
 bool compare_configuration(uint8_t *c1, Config c2);
 
 void E32_set_mode(uint8_t mode);
+
+void E32_enable_irq();

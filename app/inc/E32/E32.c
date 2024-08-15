@@ -16,7 +16,7 @@ bool E32_configure(){
         .addr_l = 0x00,
         .speed = {
             .datarate = 0b101,
-            .baudrate = 0b111,
+            .baudrate = 0b011,
             .parity = 0b00
         },
         .channel = 0x35,
@@ -41,6 +41,8 @@ bool E32_configure(){
     E32_uart_read(config, sizeof(config));
 
     E32_set_mode(OPEN);
+    system_delay(100);
+    E32_uart_change_baud(9600);
 
     return compare_configuration(config, configuration);
 }
@@ -60,4 +62,12 @@ void E32_set_mode(uint8_t mode){
     if (mode == OPEN) gpio_clear(MODE_PORT, M0_PIN | M1_PIN);
 
     if (mode == SLEEP) gpio_set(MODE_PORT, M0_PIN | M1_PIN);
+}
+
+void E32_enable_irq(){
+    rcc_periph_clock_enable(RCC_SYSCFG);
+    nvic_enable_irq(NVIC_EXTI15_10_IRQ);
+    exti_select_source(EXTI11, GPIOC);
+    exti_set_trigger(EXTI11, EXTI_TRIGGER_RISING);
+    exti_enable_request(EXTI11);
 }

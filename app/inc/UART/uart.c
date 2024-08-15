@@ -23,6 +23,12 @@ void E32_uart_setup(){
     usart_enable(UART5);
 }
 
+void E32_uart_change_baud(uint32_t baud){
+    usart_disable(UART5);
+    usart_set_baudrate(UART5, baud);
+    usart_enable(UART5);
+}
+
 void uart5_isr(){
     const bool overrun_occurred = usart_get_flag(UART5, USART_FLAG_ORE) == 1;
     const bool received_data = usart_get_flag(UART5, USART_FLAG_RXNE) == 1;
